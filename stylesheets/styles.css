@@ -185,6 +185,39 @@ footer {
 
 /* Custom */
 
+.home img {
+  width: 230px;
+  height: 230px;
+  border-radius: 50%;
+  border: 8px solid #F6F6F6;
+  margin: 20px auto;
+  display: block;
+}
+
+.home {
+  text-align: center;
+}
+
+.home p {
+  margin: 0;
+  font-size: 1.2em;
+}
+
+.home hr {
+  border: 0px;
+  height: 1px;
+  background: none;
+  border-bottom: 1px solid #d6d6d6;
+  position: relative;
+  bottom: 140px;
+  z-index: -1;
+}
+
+header img {
+  height: 210px;
+  border-radius: 6px;
+}
+
 header a {
   display: block;
 }
@@ -243,6 +276,20 @@ article h2 {
 
   pre, code {
     word-wrap:normal;
+  }
+
+  .home h1 {
+    font-size: 28px;
+  }
+
+  .home img {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+  }
+
+  .home p {
+    font-size: 14px;
   }
 }
 
