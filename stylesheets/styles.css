@@ -185,10 +185,12 @@ footer {
 
 /* Custom */
 
-.notice {
-  padding: 20px;
-  background-color: #FFFFC2;
-  border: 1px solid gray;
+header a {
+  display: block;
+}
+
+article h2 {
+  margin-bottom: 0;
 }
 
 @media print, screen and (max-width: 960px) {
