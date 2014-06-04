@@ -115,10 +115,6 @@ body.page-home {
 body.page-home .canvas-coffee {
   bottom: 44%;
   left: 9%;
-  -webkit-transition-delay: 0s;
-  -moz-transition-delay: 0s;
-  -o-transition-delay: 0s;
-  transition-delay: 0s;
   -webkit-transform: rotate(0);
   -moz-transform: rotate(0);
   -ms-transform: rotate(0);
@@ -131,10 +127,6 @@ body.page-home .canvas-notepad {
   right: 6%;
   width: 25%;
   z-index: 10;
-  -webkit-transition-delay: 0.2s;
-  -moz-transition-delay: 0.2s;
-  -o-transition-delay: 0.2s;
-  transition-delay: 0.2s;
 }
 
 .section-home {
@@ -182,24 +174,6 @@ body.page-home .canvas-notepad {
 
 .section-home .animate-home-header p {
   margin-top: 2.5rem;
-}
-
-.section-home .home-preloader {
-  position: absolute;
-  width: 5em;
-  height: 5em;
-  background: white url(../images/ajax-loader.gif) 50% 50% no-repeat;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  margin: 17% auto auto;
-  background-size: 40%;
-  -webkit-border-radius: 0.35em;
-  -moz-border-radius: 0.35em;
-  -ms-border-radius: 0.35em;
-  -o-border-radius: 0.35em;
-  border-radius: 0.35em;
 }
 
 .section-home img {
