@@ -1,5 +1,5 @@
-$('.mobile-nav-toggler, .mobile-nav-close').click(function(){
-  $('body').toggleClass('mobile-nav-open')
+$('.menu-opener, .menu-closer').click(function(){
+  $('body').toggleClass('menu-open');
 });
 
-$('.mobile-nav-holder').css('height', $('body').height());
+$('.menu').css('height', $('body').height());
