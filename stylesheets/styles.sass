@@ -1,0 +1,225 @@
+---
+---
+
+$sans-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif
+$serif-family: "Merriweather", "Georgia", "Times New Roman", Times, Cambria, Georgia, serif
+$monospace-family: "Monaco", "Courier New", monospace, sans-serif
+
+$base-font-size: 16px
+$base-line-height: 20px
+
+html
+  font-size: $base-font-size
+  line-height: $base-line-height
+  color: #000
+  -webkit-transition: background-color 0.5s ease, color 0.5s ease
+  -moz-transition: background-color 0.5s ease, color 0.5s ease
+  -o-transition: background-color 0.5s ease, color 0.5s ease
+  transition: background-color 0.5s ease, color 0.5s ease
+
+  height: 100%
+  min-height: 100%
+  overflow: hidden
+
+  background-color: #ecf0f1
+
+  -webkit-box-sizing: border-box
+  -moz-box-sizing: border-box
+  box-sizing: border-box
+
+header
+  padding: 3em
+
+h1, h2, h3, h4, h5, h6
+  font-family: $sans-family
+  line-height: $base-line-height
+  text-align: center
+
+h1
+  font-size: 5rem
+  letter-spacing: -2px
+  text-indent: -3px
+  padding: 4rem
+  -webkit-animation: fade-in-down 0.5s
+  -o-animation: fade-in-down 0.5s
+  animation: fade-in-down 0.5s
+  text-shadow: 2px 2px 3px black
+
+h2
+  font-size: 3.6rem
+  letter-spacing: -1px
+
+h3
+  font-size: 3rem
+
+h4
+  font-size: 2.5rem
+
+h5
+  font-size: 2rem
+  text-shadow: 2px 2px 3px white
+
+h6
+  font-size: 1.5rem
+
+.skill
+  color: #000
+  text-decoration: underline
+  cursor: pointer
+
+.code
+  font-family: $monospace-family
+  position: absolute
+  top: 0
+  left: 0
+  opacity: 0.3
+  display: none
+  padding: 3em
+  z-index: -1
+  max-height: 100%
+  overflow: hidden
+
+footer
+  font-size: $base-font-size*3.5
+  text-align: center
+  margin-top: 2em
+
+  ul
+    padding: 0
+    list-style-type: none
+  li
+    display: inline
+    padding-left: 0.5em
+
+  a
+    color: #000
+
+@media only screen and (max-width: 415px)
+  header
+    padding: 1em
+
+  h1
+    font-size: 3.5rem
+    letter-spacing: -2px
+    text-indent: 0
+    padding: 0
+    line-height: $base-line-height*3
+
+  h5
+    font-size: 2rem
+    line-height: $base-line-height*1.8
+
+  .code
+    padding: 0.5em
+
+
+  footer
+    font-size: $base-font-size*2.5
+    margin-top: -1.5em
+
+@media only screen and (min-width: 415px) and (max-width: 516px)
+  header
+    padding: 2em
+
+  h1
+    font-size: 4rem
+    letter-spacing: -2px
+    text-indent: 0
+    padding: 0
+    line-height: $base-line-height*3
+
+  h5
+    font-size: 2rem
+    line-height: $base-line-height*1.5
+
+  .code
+    padding: 0.5em
+
+  footer
+    font-size: $base-font-size*2.5
+    margin-top: -1.5em
+
+@media only screen and (min-width: 516px) and (max-width: 700px)
+  header
+    padding: 0.3em
+
+  h1
+    font-size: 4rem
+    letter-spacing: -2px
+    text-indent: 0
+    padding: 0
+    line-height: $base-line-height*3
+
+  h5
+    font-size: 2rem
+    line-height: $base-line-height*1.5
+
+  .code
+    padding: 0.5em
+
+  footer
+    font-size: $base-font-size*2.5
+    margin-top: -1.5em
+
+@media only screen and (min-width: 701px) and (max-width: 1024px)
+  header
+    padding: 5em
+
+  h1
+    font-size: 4.5rem
+    letter-spacing: -2px
+    text-indent: 0
+    padding: 0
+    margin-top: 2.5em
+    line-height: $base-line-height*3
+
+  h5
+    font-size: 3.2rem
+    line-height: $base-line-height*3
+
+  footer
+    font-size: $base-font-size*3.5
+    margin-top: -1.5em
+
+@media only screen and (min-width: 1024px)
+  header
+    padding: 1em
+
+  h1
+    font-size: 4.5rem
+    letter-spacing: -2px
+    text-indent: 0
+    padding: 0
+    margin-top: 2.5em
+    line-height: $base-line-height*3
+
+  h5
+    font-size: 3.2rem
+    line-height: $base-line-height*3
+
+  footer
+    font-size: $base-font-size*3.5
+    margin-top: -1.5em
+
+@-webkit-keyframes fade-in-down
+  0%
+    opacity: 0
+    -webkit-transform: translateY(-0.8em)
+    transform: translateY(-0.8em)
+
+  100%
+    opacity: 1
+    -webkit-transform: translateY(0)
+    transform: translateY(0)
+
+@keyframes fade-in-down
+  0%
+    opacity: 0
+    -webkit-transform: translateY(-0.8em)
+    transform: translateY(-0.8em)
+
+  100%
+    opacity: 1
+    -webkit-transform: translateY(0)
+    transform: translateY(0)
+
