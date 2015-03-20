@@ -1,0 +1,40 @@
+<pre>
+  <code class='code ruby-code'>
+# A solution to RubyQuiz #154.
+
+Node = Struct.new("Node", :parent, :coin, :total, :starting_coin)
+
+def make_change(amount, coinage = [25, 10, 5, 1])
+  root = Node.new(nil, nil, 0, 0)  # root of tree with no coins
+  found_totals = { 0 => root }     # track totals found to prune search
+  queue = [root]                   # leaves to process breadth-first
+
+  catch(:found) do
+    until queue.empty?
+      node = queue.shift
+      node.starting_coin.upto(coinage.size - 1) do |index|
+        coin = coinage[index]
+        new_total = node.total + coin
+        next if new_total > amount || found_totals[new_total]  # prune
+        new_node = Node.new(node, coin, new_total, index)
+        found_totals[new_total] = new_node
+        throw :found if new_total == amount
+        queue << new_node
+      end
+    end
+  end
+
+  return nil if found_totals[amount].nil?  # no solution found
+
+  result = []
+  cursor = found_totals[amount]
+  until cursor.coin.nil?
+    result << cursor.coin
+    cursor = cursor.parent
+  end
+  result.reverse!  # reverse so coins in same order as coinage provided
+end
+
+# Source code from: http://learnruby.com/examples/ruby-quiz-154.shtml
+  </code>
+</pre>
