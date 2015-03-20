@@ -4,6 +4,24 @@ title: Rômulo Machado
 ---
 
 <main>
-  <h1>Rômulo Machado</h1>
-  <p>maker at <a href="http://startae.com.br">Startaê</a></p>
+  <header>
+    <h1>Hi, I'm Rômulo!</h1>
+    <h5>I build things with <span class="skill" id="ruby">Ruby</span>,
+        <span class="skill" id="html">HTML</span>,
+        <span class="skill" id="css">CSS</span> &
+        <span class="skill" id="javascript">JS</span>.</h5>
+  </header>
+
+  <footer>
+    <ul>
+      <li><a href="http://twitter.com/romulomachado_"><i class="fa fa-twitter"></i></a></li>
+      <li><a href="http://github.com/romulomachado"><i class="fa fa-github"></i></a></li>
+      <li><a href="mailto:rcorreamachado@gmail.com"><i class="fa fa-envelope"></i></a></li>
+    </ul>
+  </footer>
+
+  {% include ruby_code.html %}
+  {% include html_code.html %}
+  {% include css_code.html %}
+  {% include js_code.html %}
 </main>
