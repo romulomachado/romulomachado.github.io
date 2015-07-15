@@ -8,8 +8,6 @@ function resetColors() {
 
 function removeCode() {
   $('.code').hide();
-  $('h1').css('text-shadow', '2px 2px 3px black');
-  $('h5').css('text-shadow', '2px 2px 3px white');
 }
 
 function hoverSkill(language, primaryColor) {
@@ -18,7 +16,6 @@ function hoverSkill(language, primaryColor) {
 }
 
 function changeColors() {
-  $('h5').css('text-shadow', '2px 2px 3px black');
   $('html').css('color', '#fff');
   $('.skill').css('color', '#fff');
   $('footer a').css('color', '#fff');
@@ -47,7 +44,5 @@ $('#css').on('mouseover', function() {
 
 $('#javascript').on('mouseover', function() {
   hoverSkill('js', '#f7df1e');
-  $('h1').css('text-shadow', '2px 2px 3px white');
-  $('h5').css('text-shadow', '2px 2px 3px white');
   $('footer a').css('color', '#000');
 });
