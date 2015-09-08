@@ -1,68 +1,102 @@
 ---
 ---
 
-$sans-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif
-$serif-family: "Merriweather", "Georgia", "Times New Roman", Times, Cambria, Georgia, serif
-$monospace-family: "Monaco", "Courier New", monospace, sans-serif
+$sans-family: 'Montserrat', Helvetica, Arial, sans-serif
 
-$base-font-size: 16px
-$base-line-height: 20px
-
-html
-  font-size: $base-font-size
-  line-height: $base-line-height
-  color: #000
-
-  height: 100%
-  min-height: 100%
-  overflow: hidden
+*
+  padding: 0
+  margin: 0
 
   -webkit-box-sizing: border-box
   -moz-box-sizing: border-box
   box-sizing: border-box
 
-h1, h2, h3, h4, h5, h6
-  font-family: $sans-family
-  line-height: $base-line-height
+main
+  width: 80%
+  margin: 0 auto
+  padding: 80px 0
+  display: block
+
+.glasses
+  max-width: 25%
+  display: block
+  margin: 0 auto
+  margin-bottom: 7em
 
 h1
-  font-size: 5rem
-  letter-spacing: -2px
-  text-indent: -3px
-
-h2
-  font-size: 3.6rem
-  letter-spacing: -1px
-
-h3
-  font-size: 3rem
-
-h4
-  font-size: 2.5rem
-
-h5
-  font-size: 2rem
-
-h6
-  font-size: 1.5rem
-
-footer
-  font-size: $base-font-size*3.5
+  font-family: $sans-family
   text-align: center
-  margin-top: 2em
+  font-size: 4em
+  font-weight: 600
 
-  ul
-    padding: 0
-    list-style-type: none
+  margin-bottom: 0.5em
+
+p
+  font-family: 'Open Sans'
+  font-size: 1.5em
+  font-weight: 300
+  text-align: center
+
+  margin-bottom: 2.5em
+
+.links
+  list-style-type: none
+  display: -webkit-flex
+  display: flex
+  width: 200px
+  margin: 0 auto
+
   li
-    display: inline
-    padding-left: 0.5em
+    width: 33.3333%
+    text-align: center
 
-  a
-    color: #000
+  img
+    max-width: 40px
 
-// @media only screen and (max-width: 415px)
-// @media only screen and (min-width: 415px) and (max-width: 516px)
-// @media only screen and (min-width: 516px) and (max-width: 700px)
-// @media only screen and (min-width: 701px) and (max-width: 1024px)
-// @media only screen and (min-width: 1024px)
+@media only screen and (max-width: 415px)
+  main
+    padding-top: 40px
+
+  .glasses
+    max-width: 80%
+    margin-bottom: 3em
+
+  h1
+    font-size: 2.8em
+
+  p
+    font-size: 1.3em
+    margin-bottom: 1.5em
+
+@media only screen and (min-width: 415px) and (max-width: 516px)
+  .glasses
+    max-width: 60%
+
+@media only screen and (min-width: 516px) and (max-width: 700px)
+  main
+    padding-top: 20px
+
+  .glasses
+    max-width: 40%
+    margin-bottom: 2.5em
+
+  h1
+    font-size: 2.8em
+    margin-bottom: 0.3em
+
+  p
+    font-size: 1.3em
+    margin-bottom: 1.5em
+@media only screen and (min-width: 701px) and (max-width: 1024px)
+  main
+    padding-top: 80px
+
+  .glasses
+    max-width: 40%
+    margin-bottom: 10em
+
+  h1
+    font-size: 4em
+
+  p
+    margin-bottom: 2em
