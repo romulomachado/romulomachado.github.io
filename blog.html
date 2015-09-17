@@ -1,0 +1,41 @@
+---
+layout: default
+title: Blog | Rômulo Machado
+---
+
+<div class="hero hero--blog">
+  <h2>Rômulo is typing...</h2>
+</div>
+
+<main class="blog-roll">
+  {% for post in site.posts %}
+    <div class="blog-post">
+      <h3 class="blog-post__title">
+        <a class="blog-post__link" href="{{ post.url }}">
+          {{ post.title }}
+        </a>
+      </h3>
+      <time datetime="{{post.date}}" class="blog-post__date">{{ post.date | date_to_string }}</time>
+    </div>
+  {% endfor %}
+</main>
+
+<footer>
+  <ul class="links">
+    <li>
+      <a href="http://github.com/romulomachado" target="_blank">
+        <img src="/images/github-icon.svg">
+      </a>
+    </li>
+    <li>
+      <a href="http://twitter.com/romulomachado_" target="_blank">
+        <img src="/images/twitter-icon.svg">
+      </a>
+    </li>
+    <li>
+      <a href="mailto:rcorreamachado@gmail.com" target="_blank">
+        <img src="/images/email-icon.svg">
+      </a>
+    </li>
+  </ul>
+</footer>
