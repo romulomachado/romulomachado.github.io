@@ -125,3 +125,7 @@ PLATFORMS
 DEPENDENCIES
   github-pages
   jekyll-watch
+  jemoji
+
+BUNDLED WITH
+   1.10.6
