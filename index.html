@@ -3,28 +3,25 @@ layout: default
 title: Rômulo Machado
 ---
 
+<h3>About</h3>
+
+<p>Hello there, my name is Rômulo and I'm a developer at <a href="http://startae.com" target="_blank">Startaê</a>. I'm passionate about beautiful design and elegant code.</p>
+
+<p>I've been building things for the web with Ruby, Javascript, HTML and CSS since 2010.</p>
+
+<h3>Latest articles</h3>
+
 <main>
-  <img class="glasses" src="/images/glasses.svg">
+  {% for post in site.posts limit:5 %}
+    <div class="blog-post">
+      <h4 class="blog-post__title">
+        <a class="blog-post__link" href="{{ post.url }}">
+          {{ post.title }}
+        </a>
+      </h4>
+      <time datetime="{{post.date}}" class="blog-post__date">{{ post.date | date_to_string }}</time>
+    </div>
+  {% endfor %}
 
-  <h1>Hi, I'm Rômulo.</h1>
-
-  <p>I build things with Ruby, JavaScript, HTML & CSS.</p>
-
-  <ul class="links">
-    <li>
-      <a href="http://github.com/romulomachado" target="_blank">
-        <img src="/images/github-icon.svg">
-      </a>
-    </li>
-    <li>
-      <a href="http://twitter.com/romulomachado_" target="_blank">
-        <img src="/images/twitter-icon.svg">
-      </a>
-    </li>
-    <li>
-      <a href="mailto:rcorreamachado@gmail.com" target="_blank">
-        <img src="/images/email-icon.svg">
-      </a>
-    </li>
-  </ul>
+  <h4 class="blog-post__title"><a href="/writing.html">More »</a></h4>
 </main>
