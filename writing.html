@@ -1,0 +1,19 @@
+---
+layout: default
+title: Writing | Rômulo Machado
+---
+
+<h3>Writing</h3>
+
+<main class="blog-roll">
+  {% for post in site.posts %}
+    <div class="blog-post">
+      <h4 class="blog-post__title">
+        <a class="blog-post__link" href="{{ post.url }}">
+          {{ post.title }}
+        </a>
+      </h4>
+      <time datetime="{{post.date}}" class="blog-post__date">{{ post.date | date_to_string }}</time>
+    </div>
+  {% endfor %}
+</main>
