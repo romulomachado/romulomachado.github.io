@@ -18,8 +18,8 @@ title: Rômulo Machado
         <a class="blog-post__link" href="{{ post.url }}">
           {{ post.title }}
         </a>
-      </h4>
-      <time datetime="{{post.date}}" class="blog-post__date">{{ post.date | date_to_string }}</time>
+      </h4><small>
+      <time datetime="{{post.date}}" class="blog-post__date">{{ post.date | date_to_string }}</time></small>
     </div>
   {% endfor %}
 
