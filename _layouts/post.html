@@ -1,34 +1,19 @@
 <!doctype html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <title>{{ page.title }}</title>
-    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
-    <link href='//fonts.googleapis.com/css?family=Open+Sans:700|Source+Serif+Pro:400,700|' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="/stylesheets/blog.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    {% include head.html %}
   </head>
   <body>
-    <section class="post">
-      <header class="post__header">
-        <h3 class="post__header__title">
-          <a href="/" title="Home">Rômulo Machado</a>
-        </h3>
-        <ul class="nav">
-          <li><a href="http://github.com/romulomachado" target="_blank">Github</a></li>
-          <li><a href="http://twitter.com/romulomachado_" target="_blank">Twitter</a></li>
-        </ul>
-      </header>
-
+    <section class="container">
+      {% include header.html %}
       <h1 class="post__title">{{ page.title }}</h1>
-      <time datetime="{{page.date}}" class="post__date">{{ page.date | date_to_string }}</time>
+      <small><time datetime="{{page.date}}" class="post__date">{{ page.date | date_to_string }}</time></small>
 
       {{ content }}
     </section>
 
     <div class="post__footer">
-      <p>Share this post on <a href='https://twitter.com/intent/tweet?text={{ page.title }}&url={{site.url}}{{page.url}}&via=romulomachado_' target='_blank'>Twitter</a> or find another one to read <a href="/blog.html">here</a>.</p>
+      <p>Share this post on <a href='https://twitter.com/intent/tweet?text={{ page.title }}&url={{site.url}}{{page.url}}&via=romulomachado_' target='_blank'>Twitter</a> or find another one to read <a href="/writing.html">here</a>.</p>
     </div>
 
     <script src="/javascripts/analytics.js"></script>
