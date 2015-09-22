@@ -9,9 +9,9 @@ html
 body
   height: 100%
   max-height: 100%
-  font-family: "Merriweather", serif
+  font-family: 'Source Serif Pro', serif
   letter-spacing: 0.01rem
-  font-size: 1.8rem
+  font-size: 2rem
   line-height: 1.75em
   color: #3A4145
 
@@ -25,7 +25,7 @@ h1, h2, h3,
 h4, h5, h6
   color: #2E2E2E
   line-height: 1.15em
-  font-family: "Open Sans", sans-serif
+  font-family: 'Open Sans', sans-serif
   text-rendering: geometricPrecision
 
 h1
@@ -221,6 +221,50 @@ table.plain tbody > tr:nth-child(odd) > th
     width: 100%
     height: 100%
 
+.post__header
+  text-align: right
+  margin-bottom: 0
+  padding-top: 1rem
+
+  &:after
+    display: block
+    content: ""
+    width: 100px
+    height: 1px
+    margin: 3rem auto
+    background-color: #eee
+
+.post__header__title
+  float: left
+  margin-top: 0
+  margin-bottom: .5rem
+  font-weight: bold
+  line-height: 1.1
+  color: #333
+  letter-spacing: -.025rem
+
+  a
+    font-weight: inherit
+    line-height: inherit
+    text-decoration: none
+
+.nav
+  padding-left: 0
+  margin-top: 0
+  margin-bottom: 0
+  list-style: none
+
+  li
+    display: inline-block
+
+    + li
+      margin-left: .5rem
+
+  a
+    font-weight: inherit
+    line-height: inherit
+    text-decoration: none
+
 .post
   position: relative
   width: 80%
@@ -230,7 +274,7 @@ table.plain tbody > tr:nth-child(odd) > th
   border-bottom: #EBF2F6 1px solid
   word-wrap: break-word
 
-  img
+  img:not(.emoji)
     display: block
     max-width: 126%
     height: auto
