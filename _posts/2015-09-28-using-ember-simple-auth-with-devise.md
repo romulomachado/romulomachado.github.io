@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Using Ember Simple Auth 1.0 with Devise
+comments: true
 ---
 
 ## Server-side setup
