@@ -375,6 +375,6 @@ And now the app is working! :sunglasses:
 
 ![App working]({{site.url}}/public/images/blog/2015-09-28-ember-simple-auth/ember-simple-auth.gif)
 
-That wraps it up! It was a long post, but I hope you managed to make your app work. If you have something to say, hit me up on Twitter, I'm [@romulomachado_](twitter.com/romulomachado_) there.
+That wraps it up! It was a long post, but I hope you managed to make your app work. If you have something to say, hit me up on Twitter, I'm <a href="http://twitter.com/romulomachado_">@romulomachado_</a> there.
 
 See you in the next one!
