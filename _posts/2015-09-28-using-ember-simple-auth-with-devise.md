@@ -114,11 +114,6 @@ Let's use the console to create a User before moving to the Ember part.
 
 ## The front-end side
 
-##### Updates: Oct 10th
-
-* Changed `authenticate` action on `app/components/login-form.js`.
-* Removed `base` from `ENV['ember-simple-auth']` on `config/environment.js`. (Thanks <a href="http://twitter.com/elidupuis" target="_blank">@elidupuis</a> for the heads up.)
-
 Using [ember-cli](http://www.ember-cli.com/), let's create the app:
 
 {% highlight bash %}
@@ -380,3 +375,8 @@ And now the app is working! :sunglasses:
 That wraps it up! It was a long post, but I hope you managed to make your app work. If you have something to say, hit me up on Twitter, I'm <a href="http://twitter.com/romulomachado_">@romulomachado_</a> there.
 
 See you in the next one!
+
+##### Updates: Oct 10th
+
+* Changed `authenticate` action on `app/components/login-form.js`.
+* Removed `base` from `ENV['ember-simple-auth']` on `config/environment.js`. (Thanks <a href="http://twitter.com/elidupuis" target="_blank">@elidupuis</a> for the heads up.)
