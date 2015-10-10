@@ -281,8 +281,8 @@ export default Ember.Component.extend({
 
   actions: {
     authenticate: function() {
-      var data = this.getProperties('identification', 'password');
-      return this.get('session').authenticate('authenticator:devise', data).catch((reason) => {
+      let { identification, password } = this.getProperties('identification', 'password');
+      return this.get('session').authenticate('authenticator:devise', identification, password).catch((reason) => {
         this.set('errorMessage', reason.error);
       });
     }
@@ -305,9 +305,7 @@ Now, we need to update our `ember-simple-auth` environment configuration, on `co
 ...
 
 ENV['ember-simple-auth'] = {
-  base: {
-    store: 'session-store:local-storage'
-  }
+  store: 'session-store:local-storage'
 }
 
 ...
@@ -363,11 +361,9 @@ Last but not least, we tell `ember-simple-auth` to redirect the user to dashboar
 ...
 
 ENV['ember-simple-auth'] = {
-  base: {
-    store: 'session-store:local-storage',
-    routeAfterAuthentication: 'dashboard',
-    routeIfAlreadyAuthenticated: 'dashboard'
-  }
+  store: 'session-store:local-storage',
+  routeAfterAuthentication: 'dashboard',
+  routeIfAlreadyAuthenticated: 'dashboard'
 }
 ...
 {% endhighlight %}
