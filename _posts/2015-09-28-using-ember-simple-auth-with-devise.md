@@ -2,6 +2,7 @@
 layout: post
 title: Using Ember Simple Auth 1.0 with Devise
 comments: true
+updated-on: 2015-10-16 00:00:00 -0300
 ---
 
 ## Server-side setup
@@ -122,13 +123,12 @@ ember new frontend
 
 _Make sure you're using Ember `2.0.0`._
 
-At the time I'm writing this post, the version 1.0.0 of ember-simple-auth is not merged on `master` yet, so we'll use it from the `jj-abrams` branch.
+<strike>At the time I'm writing this post, the version 1.0.0 of ember-simple-auth is not merged on `master` yet, so we'll use it from the `jj-abrams` branch.</strike>
 
-Let's install `ember-simple-auth` by adding this line to `devDependencies` on the `package.json` file:
+Let's install the addon `ember-simple-auth`:
 
-{% highlight javascript %}
-// package.json
-"ember-simple-auth": "simplabs/ember-simple-auth#jj-abrams"
+{% highlight bash %}
+ember install ember-simple-auth
 {% endhighlight %}
 
 Then run `bower install && npm install`.
@@ -179,6 +179,15 @@ We now have a `/login` page we can link to. Let's add the following code to the 
 {% raw %}
 {{#link-to 'login'}}Login{{/link-to}}
 {% endraw %}
+{% endhighlight %}
+
+And make `login` route extend `UnauthenticatedRouteMixin` provided by ESA.
+
+{% highlight javascript %}
+import Ember from 'ember';
+import UnauthenticatedRouteMixin from 'ember-simple-auth/mixins/unauthenticated-route-mixin';
+
+export default Ember.Route.extend(UnauthenticatedRouteMixin);
 {% endhighlight %}
 
 ![Login link]({{site.url}}/public/images/blog/2015-09-28-ember-simple-auth/welcome-to-ember-login.png)
@@ -251,7 +260,7 @@ export default Ember.Component.extend({
 
 As the component alerted, it does not know how to authenticate the session. We have to extend the `devise` authenticator `ember-simple-auth` gives us.
 
-> **Authenticators** authenticate the session. They implement concrete mechanisms for verifying a user's identity so that an application can support multiple ways of authentication such as username and password, Facebook or github by leveraging multiple authenticators.
+> **Authenticators** implement the concrete steps necessary to authenticate the session. An application can leverage several authenticators for different kinds of authentication mechanisms (e.g. the application's own backend server, external authentication providers like Facebook etc.) while the session is only ever authenticated with one authenticator at a time.
 
 Create a file named `devise.js` on `app/authenticators/` and add the following code:
 
@@ -269,6 +278,8 @@ If you're running your app proxying your API server you don't need to customize 
 Now, we have to update our `login-form` component. We need to inject ember-simple-auth's session and update our authenticate action.
 
 > The **session** is the main interface to the library. It provides methods for authentication and invalidation of the session as well as to set and read session data. It's available as a service that can be injected wherever needed in the application.
+
+> The **session store** persists the session and all of its data so that it survives a page reload. It also synchronizes the authentication status across multiple tabs or windows so that when the user logs out in one tab or window of the application, all sensitive data is also cleared in other tabs or windows of the same application as well. If the application does not define a session store, the adaptive store which uses `localStorage` if that is available or a cookie if it is not, will be used by default.
 
 {% highlight javascript %}
 // app/components/login-form.js
@@ -298,22 +309,6 @@ contentSecurityPolicy: {
   'connect-src': "*"
 }
 {% endhighlight %}
-
-Now, we need to update our `ember-simple-auth` environment configuration, on `config/environment` add:
-
-{% highlight javascript %}
-...
-
-ENV['ember-simple-auth'] = {
-  store: 'session-store:local-storage'
-}
-
-...
-{% endhighlight %}
-
-We're now telling `ember-simple-auth` to store the session on the browser's LocalStorage.
-
-> The **session store** persists the session and all of its data so that it survives a page reload. It also synchronizes the authentication status across multiple tabs or windows so that when the user logs out in one tab or window of the application, all sensitive data is also cleared in other tabs or windows of the same application as well.
 
 We just need to create our dashboard page, make it protected and redirect the user after login or a logged user accessing the root of the application.
 
@@ -361,7 +356,6 @@ Last but not least, we tell `ember-simple-auth` to redirect the user to dashboar
 ...
 
 ENV['ember-simple-auth'] = {
-  store: 'session-store:local-storage',
   routeAfterAuthentication: 'dashboard',
   routeIfAlreadyAuthenticated: 'dashboard'
 }
@@ -380,3 +374,9 @@ See you in the next one!
 
 * Changed `authenticate` action on `app/components/login-form.js`.
 * Removed `base` from `ENV['ember-simple-auth']` on `config/environment.js`. (Thanks <a href="http://twitter.com/elidupuis" target="_blank">@elidupuis</a> for the heads up.)
+
+##### Updates: Oct 16th
+
+* Made `app/routes/login.js` extend `UnauthenticatedRouteMixin`. (Thanks <a href="http://github.com/vladimir-e" target="_blank">Vladimir</a>)
+* Removed deprecated `store` from `ENV['ember-simple-auth']` on `config/enviroment.js`.
+* Updated installation instructions for `ember-simple-auth`: 1.0.0 was merged. :tada:
