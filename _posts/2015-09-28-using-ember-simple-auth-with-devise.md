@@ -105,7 +105,7 @@ easiest way to disable sessions in Rails is to add an initializer
 Rails.application.config.session_store :disabled
 {% endhighlight %}
 
-> Although `ember-simple-auth-devise` is now deprecated, this server-side guide is still valid and can be seen fully <a href="https://github.com/simplabs/ember-simple-auth/blob/master/packages/ember-simple-auth-devise/README.md" target="_blank">here</a>.
+> Although `ember-simple-auth-devise` is now deprecated, this server-side guide is still valid and can be seen fully <a href="https://github.com/simplabs/ember-simple-auth/blob/0f88b58ffa20888522f7ca836704857fd605a383/packages/ember-simple-auth-devise/README.md" target="_blank">here</a>.
 
 Let's use the console to create a User before moving to the Ember part.
 
