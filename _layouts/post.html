@@ -9,6 +9,9 @@
       {% include header.html %}
       <h1 class="post__title">{{ page.title }}</h1>
       <time datetime="{{page.date}}" class="post__date">{{ page.date | date_to_string }}</time>
+      {% if page.updated-on %}
+        <time datetime="{{page.updated-on}}" class="post__date">- Last updated on {{ page.updated-on | date_to_string }}</time>
+      {% endif %}
 
       {{ content }}
     </section>
