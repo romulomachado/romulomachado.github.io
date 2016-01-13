@@ -2,7 +2,7 @@
 layout: post
 title: Using Ember Simple Auth 1.0 with Devise
 comments: true
-updated-on: 2015-10-16 00:00:00 -0300
+updated-on: 2016-01-13 00:00:00 -0300
 ---
 
 ## Server-side setup
@@ -75,23 +75,23 @@ token and email if present:
 
 {% highlight ruby %}
 class ApplicationController < ActionController::Base
-  before_filter :authenticate_user_from_token!
-
-  # Enter the normal Devise authentication path,
-  # using the token authenticated user if available
-  before_filter :authenticate_user!
+  before_action :authenticate!
 
   private
+    def authenticate!
+      authenticate_token || render_unauthorized
+    end
 
-    def authenticate_user_from_token!
+    def authenticate_token
       authenticate_with_http_token do |token, options|
-        user_email = options[:email].presence
-        user = user_email && User.find_by_email(user_email)
+         User.find_by(authentication_token: token)
+       end
+    end
 
-        if user && Devise.secure_compare(user.authentication_token, token)
-          sign_in user, store: false
-        end
-      end
+    def render_unauthorized
+      render json: {
+        errors: ['Bad credentials']
+      }, status: 401
     end
 end
 {% endhighlight %}
@@ -104,8 +104,6 @@ easiest way to disable sessions in Rails is to add an initializer
 {% highlight ruby %}
 Rails.application.config.session_store :disabled
 {% endhighlight %}
-
-> Although `ember-simple-auth-devise` is now deprecated, this server-side guide is still valid and can be seen fully <a href="https://github.com/simplabs/ember-simple-auth/blob/0f88b58ffa20888522f7ca836704857fd605a383/packages/ember-simple-auth-devise/README.md" target="_blank">here</a>.
 
 Let's use the console to create a User before moving to the Ember part.
 
@@ -122,8 +120,6 @@ ember new frontend
 {% endhighlight %}
 
 _Make sure you're using Ember `2.0.0`._
-
-<strike>At the time I'm writing this post, the version 1.0.0 of ember-simple-auth is not merged on `master` yet, so we'll use it from the `jj-abrams` branch.</strike>
 
 Let's install the addon `ember-simple-auth`:
 
@@ -275,9 +271,34 @@ export default Devise.extend({
 
 If you're running your app proxying your API server you don't need to customize the `serverTokenEndpoint` like we did, but if you're not, you have to.
 
+We will need an authorizer too. Thankfully, ESA provides a Devise authorizer out of the box, we just need to extend it.
+
+> **Authorizers** use the session data acquired by the authenticator to construct authorization data that can be injected into outgoing network requests. As the authorizer depends on the data that the authenticator acquires, authorizers and authenticators have to fit together.
+
+Create a file named `devise.js` on `app/authorizers/` and add the following code:
+
+{% highlight javascript %}
+// app/authorizers/devise.js
+import Devise from 'ember-simple-auth/authorizers/devise';
+
+export default Devise.extend({});
+{% endhighlight %}
+
+We also need to tell our adapter to use it on all Ember Data requests:
+
+{% highlight javascript %}
+// app/adapters/application.js
+import DS from 'ember-data';
+import DataAdapterMixin from 'ember-simple-auth/mixins/data-adapter-mixin';
+
+export default DS.JSONAPIAdapter.extend(DataAdapterMixin, {
+  authorizer: 'authorizer:devise'
+});
+{% endhighlight %}
+
 Now, we have to update our `login-form` component. We need to inject ember-simple-auth's session and update our authenticate action.
 
-> The **session** is the main interface to the library. It provides methods for authentication and invalidation of the session as well as to set and read session data. It's available as a service that can be injected wherever needed in the application.
+> The **session** service is the main interface to the library. It defines the authenticate, invalidate and authorize methods as well as the session events as shown above.
 
 > The **session store** persists the session and all of its data so that it survives a page reload. It also synchronizes the authentication status across multiple tabs or windows so that when the user logs out in one tab or window of the application, all sensitive data is also cleared in other tabs or windows of the same application as well. If the application does not define a session store, the adaptive store which uses `localStorage` if that is available or a cookie if it is not, will be used by default.
 
@@ -380,3 +401,9 @@ See you in the next one!
 * Made `app/routes/login.js` extend `UnauthenticatedRouteMixin`. (Thanks <a href="http://github.com/vladimir-e" target="_blank">Vladimir</a>)
 * Removed deprecated `store` from `ENV['ember-simple-auth']` on `config/enviroment.js`.
 * Updated installation instructions for `ember-simple-auth`: 1.0.0 was merged. :tada:
+
+##### Updates: Jan 13th
+
+* Did some refactoring on `ApplicationController`
+* Added devise authorizer (Thanks Tobias Schlottke)
+* Updated some ESA concepts
