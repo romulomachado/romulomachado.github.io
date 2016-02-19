@@ -2,7 +2,7 @@
 layout: post
 title: Using Ember Simple Auth 1.0 with Devise
 comments: true
-updated-on: 2016-01-13 00:00:00 -0300
+updated-on: 2016-02-19 00:00:00 -0300
 ---
 
 ## Server-side setup
@@ -70,29 +70,28 @@ MyRailsApp::Application.routes.draw do
 end
 {% endhighlight %}
 
-Finally, the Rails application must authenticate users by their authentication
-token and email if present:
+The Rails application must authenticate users by their authentication token and email if present:
 
 {% highlight ruby %}
 class ApplicationController < ActionController::Base
-  before_action :authenticate!
+  before_filter :authenticate_user_from_token!
+
+  # Enter the normal Devise authentication path,
+  # using the token authenticated user if available
+  before_filter :authenticate_user!
 
   private
-    def authenticate!
-      authenticate_token || render_unauthorized
-    end
 
-    def authenticate_token
-      authenticate_with_http_token do |token, options|
-         User.find_by(authentication_token: token)
-       end
-    end
+  def authenticate_user_from_token!
+    authenticate_with_http_token do |token, options|
+      user_email = options[:email].presence
+      user = user_email && User.find_by_email(user_email)
 
-    def render_unauthorized
-      render json: {
-        errors: ['Bad credentials']
-      }, status: 401
+      if user && Devise.secure_compare(user.authentication_token, token)
+        sign_in user, store: false
+      end
     end
+  end
 end
 {% endhighlight %}
 
@@ -105,7 +104,34 @@ easiest way to disable sessions in Rails is to add an initializer
 Rails.application.config.session_store :disabled
 {% endhighlight %}
 
-Let's use the console to create a User before moving to the Ember part.
+The backend app also needs to support Cross-Origin Resource Sharing, so you need to install `rack-cors`:
+
+Add it to the Gemfile:
+
+{% highlight ruby %}
+gem 'rack-cors', :require => 'rack/cors'
+{% endhighlight %}
+
+In `config/application.rb`, add:
+
+{% highlight ruby %}
+module YourApp
+  class Application < Rails::Application
+
+    # ...
+
+    config.middleware.insert_before 0, "Rack::Cors" do
+      allow do
+        origins '*'
+        resource '*', :headers => :any, :methods => [:get, :post, :options]
+      end
+    end
+
+  end
+end
+{% endhighlight %}
+
+Use the console to create a User before moving to the Ember part.
 
 {% highlight ruby %}
 > User.create! email: "user@example.com", password: "password"
@@ -113,15 +139,15 @@ Let's use the console to create a User before moving to the Ember part.
 
 ## The front-end side
 
-Using [ember-cli](http://www.ember-cli.com/), let's create the app:
+Using [ember-cli](http://www.ember-cli.com/), create the app:
 
 {% highlight bash %}
 ember new frontend
 {% endhighlight %}
 
-_Make sure you're using Ember `2.0.0`._
+_Make sure you're using Ember `>= 2.0.0`._
 
-Let's install the addon `ember-simple-auth`:
+Install the addon `ember-simple-auth`:
 
 {% highlight bash %}
 ember install ember-simple-auth
@@ -131,7 +157,7 @@ Then run `bower install && npm install`.
 
 This example app will have basically 3 pages: a landing page (where we'll show information about the app), a login page and a dashboard page (only logged users can see).
 
-First, let's make the `application.js` route extend `ApplicationRouteMixin`.
+First, make the `application.js` route extend `ApplicationRouteMixin`.
 
 > The `ApplicationRouteMixin` mixin defines actions that are triggered when authentication is required, when the session has successfully been authenticated or invalidated or when authentication or invalidation fails or authorization is rejected by the server.
 
@@ -143,7 +169,7 @@ import ApplicationRouteMixin from 'ember-simple-auth/mixins/application-route-mi
 export default Ember.Route.extend(ApplicationRouteMixin);
 {% endhighlight %}
 
-Now, the landing page. Let's create a file named `index.hbs` on `app/templates/` and move the `<h2 id="title">Welcome to Ember</h2>` from `app/templates/application.hbs` to that file. Both templates should look like this:
+Now, the landing page. Create a file named `index.hbs` on `app/templates/` and move the `<h2 id="title">Welcome to Ember</h2>` from `app/templates/application.hbs` to that file. Both templates should look like this:
 
 {% highlight html %}
 {% raw %}
@@ -159,9 +185,9 @@ Now, the landing page. Let's create a file named `index.hbs` on `app/templates/`
 
 ![Welcome to Ember]({{site.url}}/public/images/blog/2015-09-28-ember-simple-auth/welcome-to-ember.png)
 
-Now that we have a landing page, let's create the login page.
+Habemus landing page! On to the login page now.
 
-Using `ember g`, we will generate a route named `login`.
+Using `ember g`, generate a route named `login`:
 
 {% highlight bash %}
 ember g route login
@@ -169,7 +195,7 @@ ember g route login
 
 That will create two files (`app/routes/login.js` and `app/templates/login.hbs`), will add a route to `app/router.js` and create unit tests as well.
 
-We now have a `/login` page we can link to. Let's add the following code to the bottom of our landing page:
+A `/login` now exists and you can link to. Add the following code to the bottom of your landing page:
 
 {% highlight html %}
 {% raw %}
@@ -197,13 +223,13 @@ And add some content to `app/templates/login.hbs`:
 
 ![Login page]({{site.url}}/public/images/blog/2015-09-28-ember-simple-auth/login.png)
 
-Now, we have to create a login-form component to handle the login.
+Now, you have to create a login-form component to handle the login.
 
 {% highlight bash %}
 ember g component login-form
 {% endhighlight %}
 
-On `app/templates/components/login-form.hbs`, let's add:
+In `app/templates/components/login-form.hbs`, add:
 
 {% highlight html %}
 {% raw %}
@@ -237,7 +263,7 @@ And add the `login-form` component on the login template, the `app/templates/log
 
 ![Login form]({{site.url}}/public/images/blog/2015-09-28-ember-simple-auth/login-form.png)
 
-The `login-form` component calls `authenticate` when the form is submitted, but there's no `authenticate` action on it yet. We need to add it:
+The `login-form` component calls `authenticate` when the form is submitted, but there's no `authenticate` action on it yet. Add it:
 
 {% highlight javascript %}
 // app/components/login-form.js
@@ -269,9 +295,9 @@ export default Devise.extend({
 });
 {% endhighlight %}
 
-If you're running your app proxying your API server you don't need to customize the `serverTokenEndpoint` like we did, but if you're not, you have to.
+If your app is proxying your API server you don't need to customize the `serverTokenEndpoint` like we did, but if you're not, you have to.
 
-We will need an authorizer too. Thankfully, ESA provides a Devise authorizer out of the box, we just need to extend it.
+We will need an authorizer too. Thankfully, ESA provides a Devise authorizer out of the box, you just need to extend it.
 
 > **Authorizers** use the session data acquired by the authenticator to construct authorization data that can be injected into outgoing network requests. As the authorizer depends on the data that the authenticator acquires, authorizers and authenticators have to fit together.
 
@@ -284,7 +310,7 @@ import Devise from 'ember-simple-auth/authorizers/devise';
 export default Devise.extend({});
 {% endhighlight %}
 
-We also need to tell our adapter to use it on all Ember Data requests:
+You also need to tell the application adapter to use it on all Ember Data requests:
 
 {% highlight javascript %}
 // app/adapters/application.js
@@ -296,7 +322,7 @@ export default DS.JSONAPIAdapter.extend(DataAdapterMixin, {
 });
 {% endhighlight %}
 
-Now, we have to update our `login-form` component. We need to inject ember-simple-auth's session and update our authenticate action.
+Now, you have to update our `login-form` component. You need to inject ember-simple-auth's session and update the authenticate action.
 
 > The **session** service is the main interface to the library. It defines the authenticate, invalidate and authorize methods as well as the session events as shown above.
 
@@ -322,7 +348,7 @@ export default Ember.Component.extend({
 });
 {% endhighlight %}
 
-We also need to update the `'connect-src'` attribute on contentSecurityPolicy:
+You also need to update the `'connect-src'` attribute on contentSecurityPolicy:
 
 {% highlight javascript %}
 // config/environment.js
@@ -331,7 +357,7 @@ contentSecurityPolicy: {
 }
 {% endhighlight %}
 
-We just need to create our dashboard page, make it protected and redirect the user after login or a logged user accessing the root of the application.
+Now, you create the dashboard page, make it protected and redirect the user after login or a logged user accessing the root of the application.
 
 Generate the route:
 
@@ -339,7 +365,7 @@ Generate the route:
 ember g route dashboard
 {% endhighlight %}
 
-We'll customize the template with a secret information and add a link to logout.
+Customize the template with a secret information and add a link to logout:
 
 {% highlight html %}
 {% raw %}
@@ -352,7 +378,7 @@ We'll customize the template with a secret information and add a link to logout.
 {% endraw %}
 {% endhighlight %}
 
-Now, we make `app/routes/dashboard.js` inherit from ember-simple-auth's `AuthenticatedRouteMixin` and add a logout action to it.
+Now, make `app/routes/dashboard.js` inherit from ember-simple-auth's `AuthenticatedRouteMixin` and add a logout action to it:
 
 {% highlight javascript %}
 import Ember from 'ember';
@@ -371,7 +397,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
 });
 {% endhighlight %}
 
-Last but not least, we tell `ember-simple-auth` to redirect the user to dashboard if he's already authenticated and the route the user should go after the being authenticated.
+Last but not least, tell `ember-simple-auth` to redirect the user to dashboard if he's already authenticated and the route the user should go after the being authenticated.
 
 {% highlight javascript %}
 ...
@@ -404,6 +430,11 @@ See you in the next one!
 
 ##### Updates: Jan 13th
 
-* Did some refactoring on `ApplicationController`
-* Added devise authorizer (Thanks Tobias Schlottke)
-* Updated some ESA concepts
+* Did some refactoring on `ApplicationController`.
+* Added devise authorizer (Thanks Tobias Schlottke).
+* Updated some ESA concepts.
+
+##### Updates: Feb 19th
+
+* Brought back old `ApplicationController`, the refactored one was not working.
+* Added `rack-cors` step to server-side setup.
