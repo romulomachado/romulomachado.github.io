@@ -420,21 +420,21 @@ See you in the next one!
 ##### Updates: Oct 10th
 
 * Changed `authenticate` action on `app/components/login-form.js`.
-* Removed `base` from `ENV['ember-simple-auth']` on `config/environment.js`. (Thanks <a href="http://twitter.com/elidupuis" target="_blank">@elidupuis</a> for the heads up.)
+* Removed `base` from `ENV['ember-simple-auth']` on `config/environment.js`. (Thanks <a href="http://twitter.com/elidupuis" target="_blank">@elidupuis</a> for the heads up!)
 
 ##### Updates: Oct 16th
 
-* Made `app/routes/login.js` extend `UnauthenticatedRouteMixin`. (Thanks <a href="http://github.com/vladimir-e" target="_blank">Vladimir</a>)
+* Made `app/routes/login.js` extend `UnauthenticatedRouteMixin`. (Thanks <a href="http://github.com/vladimir-e" target="_blank">Vladimir</a>!)
 * Removed deprecated `store` from `ENV['ember-simple-auth']` on `config/enviroment.js`.
 * Updated installation instructions for `ember-simple-auth`: 1.0.0 was merged. :tada:
 
 ##### Updates: Jan 13th
 
 * Did some refactoring on `ApplicationController`.
-* Added devise authorizer (Thanks Tobias Schlottke).
+* Added devise authorizer. (Thanks Tobias Schlottke!)
 * Updated some ESA concepts.
 
 ##### Updates: Feb 19th
 
-* Brought back old `ApplicationController`, the refactored one was not working.
+* Brought back old `ApplicationController`, the refactored one was not working. (Thanks <a href="http://twitter.com/kyleshevlin" target="_blank">@kyleshevlin</a> for pointing it out!)
 * Added `rack-cors` step to server-side setup.
