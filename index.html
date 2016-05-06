@@ -3,25 +3,12 @@ layout: default
 title: Rômulo Machado
 ---
 
-<h3>About</h3>
-
-<p>Hello there, my name is Rômulo and I'm a developer at <a href="http://startae.com" target="_blank">Startaê</a>. I'm passionate about beautiful design and elegant code.</p>
-
-<p>I've been building things for the web with Ruby, Javascript, HTML and CSS since 2010.</p>
-
-<h3>Latest articles</h3>
-
-<main>
-  {% for post in site.posts limit:5 %}
-    <div class="blog-post">
-      <h4 class="blog-post__title">
-        <a class="blog-post__link" href="{{ post.url }}">
-          {{ post.title }}
-        </a>
-      </h4><small>
-      <time datetime="{{post.date}}" class="blog-post__date">{{ post.date | date_to_string }}</time></small>
-    </div>
-  {% endfor %}
-
-  <!-- <h4 class="blog-post__title"><a href="/writing.html">More »</a></h4> -->
-</main>
+<section class='about-me'>
+  <h1 class='name'>Rômulo Machado</h1>
+  <h2 class='work'><span class='job-title'>Web Developer, </span><a href='http://startae.com' target='_blank'>Startaê</a></h2>
+  <ul class='links'>
+    <li><a href='/writing.html' target='_blank'>blog</a></li> •
+    <li><a href='http://github.com/romulomachado' target='_blank'>github</a></li> •
+    <li><a href='http://twitter.com/romulomachado_' target='_blank'>twitter</a></li>
+  </ul>
+</section>
