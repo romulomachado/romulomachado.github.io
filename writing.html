@@ -3,9 +3,9 @@ layout: default
 title: Writing | Rômulo Machado
 ---
 
-<h3>Writing</h3>
+{% include header_writing.html %}
 
-<main>
+<section class='blogposts'>
   {% for post in site.posts %}
     <div class="blog-post">
       <h4 class="blog-post__title">
@@ -16,4 +16,10 @@ title: Writing | Rômulo Machado
       <time datetime="{{post.date}}" class="blog-post__date">{{ post.date | date_to_string }}</time>
     </div>
   {% endfor %}
-</main>
+</section>
+
+<ul class='links links--centered'>
+  <li><a class='link' href='/'>home</a></li> •
+  <li><a class='link' href='http://github.com/romulomachado' target='_blank'>github</a></li> •
+  <li><a class='link' href='http://twitter.com/romulomachado_' target='_blank'>twitter</a></li>
+</ul>
