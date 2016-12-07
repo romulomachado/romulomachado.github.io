@@ -301,4 +301,4 @@ And now our multi-step form works! :tada:
 
 ![Final form with confirmation]({{site.url}}/public/images/blog/2016-12-06-multi-step-form-with-ember/04-confirmation.gif)
 
-That's wrap! Another long post, but I hope you learned how to make multi-step forms with Ember. If you have something to say, hit me up on Twitter, I'm <a href="http://twitter.com/romulomachado_">@romulomachado_</a> there. If you'd like to see the complete solution, it's on [GitHub]().
+That's wrap! Another long post, but I hope you learned how to make multi-step forms with Ember. If you have something to say, hit me up on Twitter, I'm <a href="http://twitter.com/romulomachado_">@romulomachado_</a> there. If you'd like to see the complete solution, it's on [GitHub](https://github.com/romulomachado/blog-examples/tree/master/2016-12-06-multi-step-form-with-ember).
