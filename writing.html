@@ -7,19 +7,23 @@ title: Writing | Rômulo Machado
 
 <section class='blogposts'>
   {% for post in site.posts %}
-    <div class="blog-post">
+    {% capture currentyear %}{{ post.date | date: "%Y" }}{% endcapture %}
+
+    {% if currentyear != year %}
+      {% unless forloop.first %}
+      </ul>
+      {% endunless %}
+      <h3>{{ currentyear }}</h3>
+      <ul class='blogposts__list'>
+      {% capture year %}{{ currentyear }}{% endcapture %}
+    {% endif %}
+    <li class="blog-post">
       <h4 class="blog-post__title">
         <a class="blog-post__link" href="{{ post.url }}">
           {{ post.title }}
         </a>
       </h4>
       <time datetime="{{post.date}}" class="blog-post__date">{{ post.date | date_to_string }}</time>
-    </div>
+    </li>
   {% endfor %}
 </section>
-
-<ul class='links links--centered'>
-  <li><a class='link' href='/'>home</a></li> •
-  <li><a class='link' href='http://github.com/romulomachado' target='_blank'>github</a></li> •
-  <li><a class='link' href='http://twitter.com/romulomachado_' target='_blank'>twitter</a></li>
-</ul>
